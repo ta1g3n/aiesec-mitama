@@ -1,0 +1,17 @@
+{
+    "apps": {
+        "mitama.portal": {
+            "path": "/"
+        },
+        "alumni-index": {
+            "path": "/alumni-index"
+        }
+    },
+    "database": {
+        "type": "mysql",
+        "host": "mitama_mysql",
+        "user": "mitama",
+        "password": "FoJwhFEp5vyKWFdl",
+        "name": "mitama"
+    }
+}

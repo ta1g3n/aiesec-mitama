@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='container md-5 mt-5'>
+    <div class='input-group mb-3'>
+        <span class='input-group-text'>登録フォームのURL</span>
+        <input class='form-control' value='{{ fullurl(request, '/create') }}'>
+    </div>
+    <div class='mt-4 d-flex flex-wrap'>
+{% for prof in profs %}
+        <a href="{{url("/" + prof._id)}}" class='card' style='width: 18rem'>
+            <img src="{{dataurl(prof.image)}}" class='card-img-top'/>
+            <div class='card-body'>
+                <h5 class='card-title'>{{prof.name}}</h5>
+            </div>
+        </a>
+{% endfor %}
+    </div>
+    <div>
+        <ul>
+        {% for c in extra_columns %}
+            <li>{{ c.name }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <form method="POST">
+        <div>
+            <label class='form-label'>新規カラム名</label>
+            <input class='form-control' name='name' />
+        </div>
+        {{ forms.csrf(request) }}
+        <p>{{ error }}</p>
+        <button>追加</button>
+    </form>
+</div>
+{% endblock %}

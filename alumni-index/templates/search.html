@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "header.html" %}
+<h1>{{words}}の検索結果</h1>
+<div>
+{% for prof in profs %}
+<a href="{{url("/:id")}}">
+    <img src="{{dataurl(prof.image)}}" />
+    <div>{{prof.name}}</div>  
+</a>
+{% endfor %}
+</div>
+{% endblock %}

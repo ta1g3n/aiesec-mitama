@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='container'>
+    <h1 class='mb-3'><ruby>{{prof.name}}<rt>{{prof.name}}</rt></ruby></h1>
+    <img src="{{ dataurl(prof.image) }}" />
+    <dl>
+        <dt>入会年度</dt>
+        <dd>{{prof.epoch}}</dd>
+        <dt>ハッシュタグ</dt>
+        <dd>
+            {% for tag in prof.tags %}
+                {{tag.name}}
+            {% endfor %}
+        </dd>
+        <dt>生年月日</dt>
+        <dd>{{prof.birthday}}</dd>
+        <dt>入会年度</dt>
+        <dd>{{prof.epoch}}</dd>
+        <dt>アイセックキャリア</dt>
+        <dd>1th: {{CARRER_TYPES[prof.career1]}}</dd>
+        <dd>2th: {{CARRER_TYPES[prof.career2]}}</dd>
+        <dd>3th: {{CARRER_TYPES[prof.career3]}}</dd>
+        <dd>4th: {{CARRER_TYPES[prof.career4]}}</dd>
+        {% for col in extra_columns %}
+        <dt>{{col.column.name}}</dt>
+        <dd>{{col.value}}</dd>
+        {% endfor %}
+    </dl>
+</div>
+{% endblock %}

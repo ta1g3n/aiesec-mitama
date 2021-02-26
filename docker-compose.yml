@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mitama:
+    image: boke0/mitama:latest-mysql
+    ports:
+      - 80:80
+    depends_on:
+      - mysql
+    volumes:
+      - "./:/project"
+  mysql:
+    image: mysql:latest
+    container_name: "mitama_mysql"
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_USER=mitama
+      - MYSQL_PASSWORD=${MITAMA_MYSQL_PASSWORD}
+      - MYSQL_DATABASE=mitama
