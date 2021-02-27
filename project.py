@@ -11,13 +11,11 @@ from mitama.db import DatabaseManager
 project_dir = os.path.dirname(os.path.abspath(__file__))
 
 DatabaseManager({
-    "type":"sqlite3",
-    "path": project_dir + "/db.sqlite3"
-    #"type":"mysql",
-    #"host": "mysql",
-    #"name": "mitama",
-    #"password": "FoJwhFEp5vyKWFdl",
-    #"user": "mitama"
+    "type":"mysql",
+    "host": "mysql",
+    "name": "mitama",
+    "password": "FoJwhFEp5vyKWFdl",
+    "user": "mitama"
 })
 
 project = Project(
