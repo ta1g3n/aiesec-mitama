@@ -14,7 +14,7 @@ DatabaseManager({
     "type":"mysql",
     "host": "mysql",
     "name": "mitama",
-    "password": "FoJwhFEp5vyKWFdl",
+    "password": os.environ["MITAMA_MYSQL_PASSWORD"],
     "user": "mitama"
 })
 
