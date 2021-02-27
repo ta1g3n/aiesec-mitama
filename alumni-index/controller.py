@@ -2,9 +2,31 @@ from mitama.app import Controller
 from mitama.app.http import Response
 from mitama.app.forms import ValidationError
 from datetime import datetime
+import io
+import magic
+from PIL import Image
 
-from .model import Profile, ExtraColumn, ExtraColumnValue, CONTACT_OPTION_TYPES, CARRER_TYPES
+from .model import Profile, ExtraColumn, ExtraColumnValue, CONTACT_OPTION_TYPES, CARRER_TYPES, CARRER_TYPES_FLAT
 from .forms import ProfileForm, ExtraColumnForm
+
+def resize(icon):
+    if icon is None:
+        return None
+    try:
+        img = Image.open(io.BytesIO(icon))
+    except Exception as err:
+        return icon
+    width, height = img.size
+    if width > height:
+        scale = 256 / height
+    else:
+        scale = 256 / width
+    width *= scale
+    height *= scale
+    r= img.resize((int(width), int(height)), resample=Image.NEAREST)
+    export = io.BytesIO()
+    r.save(export, format="JPEG", quality=90)
+    return export.getvalue()
 
 class ProfileController(Controller):
     def handle(self, request):
@@ -45,7 +67,10 @@ class ProfileController(Controller):
                 isostring = form["birthday"]
                 if isostring[-1] == "Z": isostring = isostring[:-2]
                 prof.birthday = datetime.fromisoformat(isostring)
-                prof.image = form["image"]
+                prof.image = resize(form["image"])
+                f = magic.Magic(mime=True, uncompress=True)
+                mime = f.from_buffer(prof.image)
+                print(mime)
                 extra = form["extra"]
                 prof.email = form["email"]
                 prof.contactOption = int(form["contactOption"])

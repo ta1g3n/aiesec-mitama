@@ -17,5 +17,5 @@ services:
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_USER=mitama
-      - MYSQL_PASSWORD=${MITAMA_MYSQL_PASSWORD}
+      - MYSQL_PASSWORD=$MITAMA_MYSQL_PASSWORD
       - MYSQL_DATABASE=mitama

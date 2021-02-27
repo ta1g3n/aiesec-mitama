@@ -23,44 +23,78 @@ CONTACT_OPTION_TYPES = {
 }
 
 LCP = 0
-OGXEB = 110
+OGXD = 110
 OGXML = 111
 OGXPL = 112
 OGXM = 113
-ICXEB = 120
+ICXD = 120
 ICXML = 121
 ICXPL = 122
 ICXM = 123
-PDEB = 130
+PDD = 130
 PDML = 131
 PDPL = 132
 PDM = 133
-EWAEB = 140
+EWAD = 140
 EWAML = 141
 EWAPL = 142
 EWAM = 143
-BO = 200
+BOD = 200
+BOM = 201
+FD = 210
+FM = 211
+BDD = 220
+BDM = 221
+TMD = 230
+TMM = 231
+BCXPD = 240
+BCXPM = 241
+MC = 300
 
 CARRER_TYPES = {
-    LCP: "LCP",
-    OGXEB: "OGX EB",
-    OGXML: "OGX ML",
-    OGXPL: "OGX PL",
-    OGXM: "OGX Member",
-    ICXEB: "ICX EB",
-    ICXML: "ICX ML",
-    ICXPL: "ICX PL",
-    ICXM: "ICX Member",
-    PDEB: "PD EB",
-    PDML: "PD ML",
-    PDPL: "PD PL",
-    PDM: "PD Member",
-    EWAEB: "EwA EB",
-    EWAML: "EwA ML",
-    EWAPL: "EwA PL",
-    EWAM: "EwA Member",
-    BO: "Back Office"
+    LCP: "LCP - 委員長",
+    "OGX - 送り出し事業部": {
+        OGXD: "OGX Director - 統括",
+        OGXPL: "OGX PL - プロジェクトリーダー",
+        OGXM: "OGX Member - メンバー",
+    },
+    "ICX - 受け入れ事業部": {
+        ICXD: "ICX Director - 統括",
+        ICXPL: "ICX PL - プロジェクトリーダー",
+        ICXM: "ICX Member - メンバー",
+    },
+    "F - 財務局": {
+        FD: "F Director - 統括",
+        FM: "F Member - メンバー",
+    },
+    "BD - 外部関係局": {
+        BDD: "BD Director - 統括",
+        BDM: "BD Member - メンバー",
+    },
+    "TM - 人事局": {
+        TMD: "TM Director - 統括",
+        TMM: "TM Member - メンバー",
+    },
+    "BCXP - 広報ブランド局": {
+        BCXPD: "BCXP Director - 統括",
+        BCXPM: "BCXP Member - メンバー",
+    },
+    "その他バックオフィス": {
+        BOD: "BackOffice Director - 統括",
+        BOM: "BackOffice Member - メンバー",
+    },
+    MC: "MC - 事務局"
 }
+
+CARRER_TYPES_FLAT = dict()
+
+for k,v in CARRER_TYPES.items():
+    if isinstance(v, dict):
+        for k_, v_ in v.items():
+            CARRER_TYPES_FLAT[k_] = v_
+    else:
+        CARRER_TYPES_FLAT[k] = v
+
 
 db = Database(prefix="alumni_index")
 

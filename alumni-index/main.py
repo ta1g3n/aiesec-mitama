@@ -3,7 +3,7 @@ from mitama.utils.controllers import static_files
 from mitama.utils.middlewares import SessionMiddleware, CsrfMiddleware
 from mitama.app.method import view
 
-from .model import CONTACT_OPTION_TYPES, CARRER_TYPES
+from .model import CONTACT_OPTION_TYPES, CARRER_TYPES, CARRER_TYPES_FLAT
 from .controller import ProfileController
 
 
@@ -28,4 +28,5 @@ class App(App):
         view = super().view
         view.globals["CONTACT_OPTION_TYPES"] = CONTACT_OPTION_TYPES
         view.globals["CARRER_TYPES"] = CARRER_TYPES
+        view.globals["CARRER_TYPES_FLAG"] = CARRER_TYPES_FLAT
         return view
