@@ -9,6 +9,8 @@ services:
       - mysql
     volumes:
       - "./:/project"
+    environment:
+      - MITAMA_MYSQL_PASSWORD=$MITAMA_MYSQL_PASSWORD
   mysql:
     image: mysql:latest
     container_name: "mitama_mysql"
