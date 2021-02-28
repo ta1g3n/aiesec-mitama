@@ -15,11 +15,11 @@ FACEBOOK = 3
 LINKEDIN = 4
 
 CONTACT_OPTION_TYPES = {
-    TEL: "電話、SMS",
     TWITTER: "Twitter",
     LINE: "LINE",
     FACEBOOK: "Facebook",
     LINKEDIN: "LinkedIn"
+    TEL: "電話、SMS",
 }
 
 LCP = 0

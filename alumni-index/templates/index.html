@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 <div class='container md-5 mt-5'>
-    <div class='input-group mb-3'>
-        <span class='input-group-text'>登録フォームのURL</span>
-        <input class='form-control' value='{{ fullurl(request, '/create') }}'>
+    <div class='d-flex'>
+        <div class='input-group mb-3'>
+            <span class='input-group-text'>登録フォームのURL</span>
+            <input class='form-control' value='{{ fullurl(request, '/create') }}'>
+        </div>
+        <a href='{{ url("/settings") }}' class='btn btn-primary'>設定</a>
     </div>
     <div class='mt-4 d-flex flex-wrap'>
 {% for prof in profs %}
@@ -16,9 +19,11 @@
 {% endfor %}
     </div>
     <div>
-        <ul>
+        <ul class='list-group'>
         {% for c in extra_columns %}
-            <li>{{ c.name }}</li>
+            <li class='list-group-item'>
+                {{ c.name }}
+            </li>
         {% endfor %}
         </ul>
     </div>

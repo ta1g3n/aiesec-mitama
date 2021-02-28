@@ -70,7 +70,6 @@ class ProfileController(Controller):
                 prof.image = resize(form["image"])
                 f = magic.Magic(mime=True, uncompress=True)
                 mime = f.from_buffer(prof.image)
-                print(mime)
                 extra = form["extra"]
                 prof.email = form["email"]
                 prof.contactOption = int(form["contactOption"])
