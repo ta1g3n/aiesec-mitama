@@ -18,7 +18,7 @@ CONTACT_OPTION_TYPES = {
     TWITTER: "Twitter",
     LINE: "LINE",
     FACEBOOK: "Facebook",
-    LINKEDIN: "LinkedIn"
+    LINKEDIN: "LinkedIn",
     TEL: "電話、SMS",
 }
 
