@@ -2,7 +2,7 @@ version: "3"
 
 services:
   mitama:
-    image: boke0/mitama:latest-mysql
+    image: mitamaorg/mitama:latest-mysql
     ports:
       - 80:80
     depends_on:
