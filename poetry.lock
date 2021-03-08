@@ -143,7 +143,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "importlib-metadata"
-version = "3.7.0"
+version = "3.7.2"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
@@ -205,14 +205,14 @@ i18n = ["Babel (>=0.8)"]
 
 [[package]]
 name = "kyokusui"
-version = "0.1.2"
+version = "0.1.3"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.6,<4.0"
 
 [package.dependencies]
-mitama = ">=4.5.4,<5.0.0"
+mitama = ">=4.5.8,<5.0.0"
 
 [[package]]
 name = "markdown"
@@ -238,7 +238,7 @@ python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
 
 [[package]]
 name = "mitama"
-version = "4.5.8"
+version = "4.5.9"
 description = ""
 category = "main"
 optional = false
@@ -259,6 +259,7 @@ python-magic = ">=0.4.22,<0.5.0"
 pywebpush = ">=1.11.0,<2.0.0"
 SQLAlchemy = ">=1.3.23,<2.0.0"
 tzlocal = ">=2.1,<3.0"
+uWSGI = ">=2.0.19,<3.0.0"
 watchdog = ">=2.0.1,<3.0.0"
 
 [[package]]
@@ -487,6 +488,14 @@ secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "cer
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
 [[package]]
+name = "uwsgi"
+version = "2.0.19.1"
+description = "The uWSGI server"
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "watchdog"
 version = "2.0.2"
 description = "Filesystem events monitoring"
@@ -553,7 +562,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "91ea2fc2c8e024a9c520cf57d1e3b85960b6f5c2f8776a37cf9286218a835edd"
+content-hash = "77854c5c87496f7f8459c62eafc9ff4e06b9ddde9e87664c6e265f386712a532"
 
 [metadata.files]
 bcrypt = [
@@ -716,8 +725,8 @@ idna = [
     {file = "idna-2.10.tar.gz", hash = "sha256:b307872f855b18632ce0c21c5e45be78c0ea7ae4c15c828c20788b26921eb3f6"},
 ]
 importlib-metadata = [
-    {file = "importlib_metadata-3.7.0-py3-none-any.whl", hash = "sha256:c6af5dbf1126cd959c4a8d8efd61d4d3c83bddb0459a17e554284a077574b614"},
-    {file = "importlib_metadata-3.7.0.tar.gz", hash = "sha256:24499ffde1b80be08284100393955842be4a59c7c16bbf2738aad0e464a8e0aa"},
+    {file = "importlib_metadata-3.7.2-py3-none-any.whl", hash = "sha256:407d13f55dc6f2a844e62325d18ad7019a436c4bfcaee34cda35f2be6e7c3e34"},
+    {file = "importlib_metadata-3.7.2.tar.gz", hash = "sha256:18d5ff601069f98d5d605b6a4b50c18a34811d655c55548adc833e687289acde"},
 ]
 importlib-resources = [
     {file = "importlib_resources-5.1.2-py3-none-any.whl", hash = "sha256:ebab3efe74d83b04d6bf5cd9a17f0c5c93e60fb60f30c90f56265fce4682a469"},
@@ -732,8 +741,8 @@ jinja2 = [
     {file = "Jinja2-2.11.3.tar.gz", hash = "sha256:a6d58433de0ae800347cab1fa3043cebbabe8baa9d29e668f1c768cb87a333c6"},
 ]
 kyokusui = [
-    {file = "kyokusui-0.1.2-py3-none-any.whl", hash = "sha256:bf14404ebc1543cf98851df1eedc9518fd508d33240c591b68f914984d5bb12b"},
-    {file = "kyokusui-0.1.2.tar.gz", hash = "sha256:0ba5efb9d77881905460cba9923aa30952e2804a716679081f291f21ffe6fa06"},
+    {file = "kyokusui-0.1.3-py3-none-any.whl", hash = "sha256:f82373d13217970fabd71d61131143a804ad29aed4388384d0104d74028229b3"},
+    {file = "kyokusui-0.1.3.tar.gz", hash = "sha256:6fa0340024c812f2081e05d75eae0785092629d519a3ab5d432246ee5f5f6a29"},
 ]
 markdown = [
     {file = "Markdown-3.3.4-py3-none-any.whl", hash = "sha256:96c3ba1261de2f7547b46a00ea8463832c921d3f9d6aba3f255a6f71386db20c"},
@@ -794,8 +803,8 @@ markupsafe = [
     {file = "MarkupSafe-1.1.1.tar.gz", hash = "sha256:29872e92839765e546828bb7754a68c418d927cd064fd4708fab9fe9c8bb116b"},
 ]
 mitama = [
-    {file = "mitama-4.5.8-py3-none-any.whl", hash = "sha256:2c6765ad296294c2d3a29c305fb9c7bfafc5156c0ac5c90739617161fedef57f"},
-    {file = "mitama-4.5.8.tar.gz", hash = "sha256:aab561f6e01bb6c93b6053331a4de22b57fbf0903e8ecdf3b10d28edce429720"},
+    {file = "mitama-4.5.9-py3-none-any.whl", hash = "sha256:47e2d50e8a9ce6e6a2d02ac37da29fcee880ac0d266630adca8c84e2e004ab88"},
+    {file = "mitama-4.5.9.tar.gz", hash = "sha256:2de015d45c7e3a99cb98cf864e2802d8e0f707f90430e66680501363d4694bae"},
 ]
 pillow = [
     {file = "Pillow-8.1.2-cp36-cp36m-macosx_10_10_x86_64.whl", hash = "sha256:5cf03b9534aca63b192856aa601c68d0764810857786ea5da652581f3a44c2b0"},
@@ -966,6 +975,9 @@ tzlocal = [
 urllib3 = [
     {file = "urllib3-1.26.3-py2.py3-none-any.whl", hash = "sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80"},
     {file = "urllib3-1.26.3.tar.gz", hash = "sha256:de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"},
+]
+uwsgi = [
+    {file = "uWSGI-2.0.19.1.tar.gz", hash = "sha256:faa85e053c0b1be4d5585b0858d3a511d2cd10201802e8676060fd0a109e5869"},
 ]
 watchdog = [
     {file = "watchdog-2.0.2-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:1f518a6940cde8720b8826a705c164e6b9bd6cf8c00f14269ffac51e017e06ec"},
