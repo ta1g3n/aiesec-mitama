@@ -6,7 +6,7 @@ authors = ["boke0 <speken00.tt@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-kyokusui = "^0.1.2"
+kyokusui = "^0.1.3"
 
 [tool.poetry.dev-dependencies]
 
