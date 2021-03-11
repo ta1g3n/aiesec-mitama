@@ -3,6 +3,11 @@
 {% set post = request.post()%}
 <form method="POST" enctype='multipart/form-data' class='container mb-5 mt-5'>
     <h1>図鑑登録フォーム</h1>
+    <p>
+        個人情報に関しましては個人が特定されないような活用をし、LCとして厳重に管理させていただきます。
+        詳しいご説明は、下記のプライバシーポリシーをご確認ください。<br>
+        <a href="http://www.aiesec.jp/privacypolicy/">▷弊団体の個人情報取り扱いに関する方針(プライバシーポリシー)</a>
+    </p>
     <div class='mb-3'>
         <label class='form-label'>名前</label>
         <input class='form-control' type="text" name="name" placeholder="名前" value="{{ post.name }}" required />
@@ -119,8 +124,21 @@
         <label class='form-label'>ID, URLなど</label>
         <input class='form-control' name='contactIdent' value='{{ post.contactIdent }}' required/>
     </div>
+    <div class='mb-3 form-check'>
+        <input type='checkbox' id="policy" class='form-check-input'/>
+        <label class='form-check-label'><a href="http://www.aiesec.jp/privacypolicy/">プライバシー・ポリシー</a>に同意します</label>
+    </div>
     <p>{{error}}</p>
     {{ forms.csrf(request) }}
-    <button class='btn btn-primary'>登録する</button>
+    <button class='btn btn-primary' id="submit_button" disabled>登録する</button>
 </form>
+<script>
+document.querySelector("#policy").onchange=function(){
+    if(this.checked){
+        document.querySelector("#submit_button").disabled=false
+    }else{
+        document.querySelector("#submit_button").disabled=true
+    }
+}
+</script>
 {% endblock %}

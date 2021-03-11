@@ -11,7 +11,7 @@ from mitama.db import DatabaseManager
 project_dir = os.path.dirname(os.path.abspath(__file__))
 
 DatabaseManager({
-    "type":"mysql",
+    "type": "mysql",
     "host": "mysql",
     "name": "mitama",
     "password": os.environ["MITAMA_MYSQL_PASSWORD"],
@@ -22,7 +22,7 @@ project = Project(
     include("mitama.portal", path="/"),
     include("alumni-index", path="/alumni-index"),
     include("kyokusui", path="/kyokusui"),
-    project_dir = project_dir
+    project_dir=project_dir
 )
 application = project.wsgi
 

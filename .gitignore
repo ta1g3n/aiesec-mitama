@@ -1,1 +1,6 @@
 .tmp/
+data/
+__pycache__/
+uwsgi.log
+.env
+
