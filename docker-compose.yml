@@ -4,7 +4,7 @@ services:
   mitama:
     image: mitamaorg/mitama:latest-mysql
     ports:
-      - 8080:80
+      - 80:80
     depends_on:
       - mysql
     volumes:
@@ -14,7 +14,7 @@ services:
   mysql:
     image: mysql:latest
     ports:
-      - 13306:3306
+      - 3306:3306
     volumes:
       - "./data:/var/lib/mysql"
     environment:
