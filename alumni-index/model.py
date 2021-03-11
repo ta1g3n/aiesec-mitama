@@ -1,5 +1,13 @@
 from mitama.db import BaseDatabase, relationship
-from mitama.db.types import *
+from mitama.db.types import (
+    Column,
+    String,
+    ForeignKey,
+    Date,
+    Integer,
+    Text,
+    LargeBinary
+)
 
 from mitama.models import Group
 
@@ -50,6 +58,10 @@ TMM = 231
 BCXPD = 240
 BCXPM = 241
 MC = 300
+TEAM_LEADER = 400
+TEAM_MEMBER = 401
+EC = 500
+OTHER = 1000
 
 CARRER_TYPES = {
     LCP: "LCP - 委員長",
@@ -83,12 +95,16 @@ CARRER_TYPES = {
         BOD: "BackOffice Director - 統括",
         BOM: "BackOffice Member - メンバー",
     },
-    MC: "MC - 事務局"
+    MC: "MC - 事務局",
+    EC: "EC - 選挙管理委員会",
+    TEAM_LEADER: "チームリーダー",
+    TEAM_MEMBER: "チームメンバー",
+    OTHER: "その他",
 }
 
 CARRER_TYPES_FLAT = dict()
 
-for k,v in CARRER_TYPES.items():
+for k, v in CARRER_TYPES.items():
     if isinstance(v, dict):
         for k_, v_ in v.items():
             CARRER_TYPES_FLAT[k_] = v_
@@ -98,38 +114,54 @@ for k,v in CARRER_TYPES.items():
 
 db = Database(prefix="alumni_index")
 
+
 class Profile(db.Model):
     name = Column(String(255))
     ruby = Column(String(255))
-    birthday = Column(Date)
     epoch = Column(Integer)
-    career1 = Column(Integer)
-    career2 = Column(Integer)
-    career3 = Column(Integer)
-    career4 = Column(Integer)
     image = Column(LargeBinary)
     email = Column(String(255))
     contactOption = Column(Integer)
     contactIdent = Column(String(255))
 
+
+class Career(db.Model):
+    profile = relationship(Profile, backref='careers')
+    profile_id = Column(String(64), ForeignKey("alumni_index_profile._id"))
+    grade = Column(Integer)
+    career = Column(Integer)
+
+
+class TravelHistory(db.Model):
+    profile = relationship(Profile, backref='travel_histories')
+    profile_id = Column(String(64), ForeignKey("alumni_index_profile._id"))
+    year = Column(Integer)
+    span = Column(Integer)
+    place = Column(String(64))
+    description = Column(Text)
+
+
 class ExtraColumn(db.Model):
     name = Column(String(255))
+
 
 class ExtraColumnValue(db.Model):
     column_id = Column(String(64), ForeignKey("alumni_index_extra_column._id"))
     profile_id = Column(String(64), ForeignKey("alumni_index_profile._id"))
     column = relationship("ExtraColumn")
-    profile = relationship("Profile", backref = "extra")
+    profile = relationship("Profile", backref="extra")
     value = Column(String(255))
+
 
 class Bd(db.Model):
     group_id = Column(String(64), ForeignKey("mitama_group._id"))
     group = relationship(Group)
+
     @classmethod
     def is_bd(cls, user):
         for group in user.groups:
             try:
-                cls.retrieve(group = group)
+                cls.retrieve(group=group)
                 return True
             except Exception:
                 continue
