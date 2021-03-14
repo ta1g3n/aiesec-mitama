@@ -9,6 +9,7 @@ python = "^3.6"
 kyokusui = "^0.1.3"
 
 [tool.poetry.dev-dependencies]
+mitama = "^4.6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

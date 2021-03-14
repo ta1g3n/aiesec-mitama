@@ -1,0 +1,208 @@
+{% extends "base_out.html" %}
+{% block content %}
+{% set post = request.post()%}
+<form method="POST" enctype='multipart/form-data' class='container mb-5 mt-5'>
+    <div class="row bs-wizard" style="border-bottom:0;">
+        <div class="col bs-wizard-step complete">
+            <div class="text-center bs-wizard-stepnum">Step 1</div>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div> <a href="#" class="bs-wizard-dot"></a>
+        </div>
+        <div class="col bs-wizard-step active">
+            <!-- complete -->
+            <div class="text-center bs-wizard-disabled">Step 2</div>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div> <a href="#" class="bs-wizard-dot"></a>
+        </div>
+        <div class="col bs-wizard-step disabled">
+            <!-- complete -->
+            <div class="text-center bs-wizard-stepnum">Step 3</div>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div> <a href="#" class="bs-wizard-dot"></a>
+        </div>
+    </div>
+    <div class='mb-4'>
+        <h5 class='form-label'>アイセックキャリア</h5>
+        <p>現役時代と名前が異なる場合は、日本語名と近いもの、もしくはその他にご記入ください</p>
+        <div class='mt-2'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>学年</th>
+                        <th>キャリア</th>
+                    </tr>
+                </thead>
+                <tbody id="careers_forms">
+                    {% set last_career=0 %}
+                    {% for career in careers %}
+                    <tr>
+                        <td>
+                            {{loop.index}}回生
+                            <input class="form-control" name="careers.0.grade" type="hidden" value="{{loop.index}}" />
+                        </td>
+                        <td>
+                            <select class='form-control' name='careers.0.type'>
+                                <option value="">未選択</option>
+                                {% for k_,obj in CAREER_TYPES.items() %}
+                                {% if obj is mapping %}
+                                <optgroup label="{{ k_ }}">
+                                    {% for k__,v in obj.items() %}
+                                    <option value="{{k__}}" {{ "selected" if career.type==k__ else "" }}>{{v}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                                {% else %}
+                                <option value="{{k_}}" {{ "selected" if career.type==k_ else "" }}>{{obj}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    {% set last_career = loop.index %}
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            {{ last_career+1 }}回生
+                            <input class="form-control" name="careers.{{last_career+1}}.grade" type="hidden" value="{{ last_career+1 }}" />
+                        </td>
+                        <td>
+                            <select class='form-control' name='careers.{{last_career+1}}.type'>
+                                <option value="">未選択</option>
+                                {% for k_,obj in CAREER_TYPES.items() %}
+                                {% if obj is mapping %}
+                                <optgroup label="{{ k_ }}">
+                                    {% for k__,v in obj.items() %}
+                                    <option value="{{k__}}">{{v}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                                {% else %}
+                                <option value="{{k_}}">{{obj}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td class='d-flex'><button type="button" class='btn btn-secondary ms-auto' onclick="addcareerform()">追加</button></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <div class='mb-4'>
+        <h5 class='form-label'>渡航歴</h5>
+        <div class='mt-2'>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>渡航年度</th>
+                        <th>渡航先</th>
+                        <th>説明</th>
+                    </tr>
+                </thead>
+                <tbody id="history_forms">
+                    {% set i = 0 %}
+                    {% for history in histories %}
+                    <tr>
+                        <td>
+                            <input class="form-control" name="history.{{ loop.index }}.year" type="number" min="1945" />
+                            年度
+                        </td>
+                        <td>
+                            <input class="form-control" name="history.{{ loop.index }}.place" />
+                        </td>
+                        <td>
+                            <input class="form-control" name="history.{{ loop.index }}.descption" />
+                        </td>
+                    </tr>
+                    {% set i = loop.index %}
+                    {% endfor %}
+                    <tr>
+                        <td class='col-3'>
+                            <div class='input-group'>
+                            <input class="form-control" name="history.{{ i+1 }}.year" type="number" min="1945" />
+                            <span class='input-group-text'>年度</span>
+                            </div>
+                        </td>
+                        <td class='col-3'>
+                            <input class="form-control" name="history.{{ i+1 }}.place" />
+                        </td>
+                        <td class='col-4'>
+                            <input class="form-control" name="history.{{ i+1 }}.descption" />
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class='d-flex'><button type="button" class='btn btn-secondary ms-auto' onclick="addhistoryform()">追加</button></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <p>{{error}}</p>
+    {{ forms.csrf(request) }}
+    <div class='d-flex'>
+        <button class='btn btn-primary ms-auto'>次へ</button>
+    </div>
+</form>
+<script>
+function addcareerform() {
+    let n = document.querySelectorAll("#careers_forms tr").length + 1;
+    const row = document.createElement("tr")
+    row.innerHTML = `
+        <tr>
+            <td>
+               ${n}回生
+               <input class="form-control" name="careers.${n}.grade" type="hidden" value="${n}"/>
+            </td>
+            <td>
+               <select class='form-control' name='careers.${n}.type'>
+                    <option value="">未選択</option>
+                    {% for k_,obj in CAREER_TYPES.items() %}
+                    {% if obj is mapping %}
+                    <optgroup label="{{ k_ }}">
+                        {% for k__,v in obj.items() %}
+                        <option value="{{k__}}">{{v}}</option>
+                        {% endfor %}
+                    </optgroup>
+                    {% else %}
+                    <option value="{{k_}}">{{obj}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+    `
+    document.querySelector("#careers_forms").append(row)
+}
+function addhistoryform() {
+    let n = document.querySelectorAll("#history_forms tr").length + 1;
+    const row = document.createElement("tr")
+    row.innerHTML = `
+        <tr>
+            <td class='col-3'>
+                <div class='input-group'>
+                <input class="form-control" name="history.${n}.year" type="number" min="1945" />
+                <span class='input-group-text'>年度</span>
+                </div>
+            </td>
+            <td class='col-3'>
+                <input class="form-control" name="history.${n}.place" />
+            </td>
+            <td class='col-4'>
+                <input class="form-control" name="history.${n}.descption" />
+            </td>
+        </tr>
+    `;
+    document.querySelector("#history_forms").append(row)
+}
+</script>
+{% endblock %}

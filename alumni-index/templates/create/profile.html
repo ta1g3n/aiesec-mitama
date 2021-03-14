@@ -1,0 +1,73 @@
+{% extends "base_out.html" %}
+{% block content %}
+{% set post = request.post()%}
+<form method="POST" enctype='multipart/form-data' class='container mb-5 mt-5'>
+    <div class="row bs-wizard" style="border-bottom:0;">
+        <div class="col bs-wizard-step active">
+            <div class="text-center bs-wizard-stepnum">Step 1</div>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div> <a href="#" class="bs-wizard-dot"></a>
+        </div>
+        <div class="col bs-wizard-step disabled">
+            <!-- complete -->
+            <div class="text-center bs-wizard-disabled">Step 2</div>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div> <a href="#" class="bs-wizard-dot"></a>
+        </div>
+        <div class="col bs-wizard-step disabled">
+            <!-- complete -->
+            <div class="text-center bs-wizard-stepnum">Step 3</div>
+            <div class="progress">
+                <div class="progress-bar"></div>
+            </div> <a href="#" class="bs-wizard-dot"></a>
+        </div>
+    </div>
+    <div class='mb-3'>
+        <label class='form-label'>名前</label>
+        <input class='form-control' type="text" name="name" placeholder="名前" value="{{ post.name }}" required />
+    </div>
+    <div class='mb-3'>
+        <label class='form-label'>ふりがな</label>
+        <input class='form-control' type="text" name="ruby" placeholder="ふりがな" value="{{ post.ruby }}" required />
+    </div>
+    <div class='mb-3'>
+        <label class='form-label'>入会年度(ex. 2020年度入会の場合は2020)</label>
+        <input class='form-control' type="number" name="epoch" placeholder="入会年度" min="1945" value="{{ post.epoch }}" required />
+    </div>
+    {% for col in extra_columns %}
+    <div class='mb-3'>
+        <label class='form-label'>{{ col.name }}</label>
+        <input class='form-control' type="text" name="extra.{{ col._id }}" placeholder="{{ col.name }}" value="{{ post[col._id] }}" />
+    </div>
+    {% endfor %}
+    <div class='mb-3'>
+        <label class='form-label'>写真</label>
+        <input class='form-control' type="file" name="image" placeholder="写真" accept="image/png, image/jpeg, image/gif" required/>
+    </div>
+    <h3 class='mt-4'>公開されない情報</h3>
+    <p>EB/BDメンバーにて管理、利用することを目的とする質問です。ご協力お願いいたします</p>
+    <div class='mb-3'>
+        <label class='form-label'>メールアドレス</label>
+        <input class='form-control' name='email' value='{{ post.email }}' required/>
+    </div>
+    <div class='mb-3'>
+        <label class='form-label'>その他連絡のつく手段</label>
+        <select name='contactOption' class='form-select'>
+            {% for key, label in CONTACT_OPTION_TYPES.items() %}
+            <option value='{{ key }}' {% if post.career == key %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class='mb-3'>
+        <label class='form-label'>ID, URLなど</label>
+        <input class='form-control' name='contactIdent' value='{{ post.contactIdent }}' required/>
+    </div>
+    <p>{{error}}</p>
+    {{ forms.csrf(request) }}
+    <div class='d-flex'>
+        <button class='btn btn-primary ms-auto'>次へ</button>
+    </div>
+</form>
+{% endblock %}
