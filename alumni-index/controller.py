@@ -8,7 +8,7 @@ from PIL import Image
 from .model import (
     Profile, ExtraColumn, ExtraColumnValue, Career, TravelHistory
 )
-from .forms import ProfileForm, ExtraColumnForm
+from .forms import ProfileForm, CareerForm, ExtraColumnForm
 
 
 def resize(icon):
@@ -55,8 +55,89 @@ class ProfileController(Controller):
             "extra_columns": extra_columns
         })
 
+    def start_create(self, request):
+        template = self.view.get_template("create/start.html")
+        return Response.render(template)
+
+    def fin_create(self, request):
+        template = self.view.get_template("create/fin.html")
+        return Response.render(template)
+
+    def first_create(self, request):
+        template = self.view.get_template("create/profile.html")
+        error = ""
+        if request.method == "POST":
+            try:
+                form = ProfileForm(request.post())
+                prof = Profile()
+                prof.name = form["name"]
+                prof.ruby = form["ruby"]
+                prof.epoch = form["epoch"]
+                prof.image = resize(form["image"])
+                extra = form["extra"]
+                prof.email = form["email"]
+                prof.contactOption = int(form["contactOption"])
+                prof.contactIdent = form["contactIdent"]
+                prof.create()
+                for colid, value in extra.items():
+                    col = ExtraColumn.retrieve(colid)
+                    val = ExtraColumnValue()
+                    val.column = col
+                    val.profile = prof
+                    val.value = value
+                    val.create()
+                sess = request.session()
+                sess["profile_id"] = prof._id
+                return Response.redirect(
+                    self.app.convert_url("/create/second")
+                )
+            except Exception as err:
+                error = str(err)
+        return Response.render(template, {
+            "title": "図鑑登録",
+            "error": error,
+            "extra_columns": ExtraColumn.list()
+        })
+
+    def second_create(self, request):
+        template = self.view.get_template("create/tables.html")
+        error = ""
+        form = {}
+        sess = request.session()
+        try:
+            prof = Profile.retrieve(sess["profile_id"])
+        except Exception:
+            return Response.redirect(self.app.convert_url("/create"))
+        if request.method == "POST":
+            form = CareerForm(request.post())
+            try:
+                careers = form["careers"]
+                histories = form["histories"]
+                for career_ in careers.values():
+                    career = Career()
+                    career.type = int(career_["type"])
+                    career.grade = int(career_["grade"])
+                    career.profile = prof
+                    career.create()
+                for history_ in histories.values():
+                    history = TravelHistory()
+                    history.year = history_["year"]
+                    history.place = history_["place"]
+                    history.profile = prof
+                    history.description = history_["description"]
+                    history.create()
+                return Response.redirect(
+                    self.app.convert_url("/create/fin")
+                )
+            except Exception as err:
+                error = str(err)
+        return Response.render(template, {
+            "error": error,
+            "form": form
+        })
+
     def create(self, request):
-        template = self.view.get_template("create.html")
+        template = self.view.get_template("create/profile.html")
         if request.method == "POST":
             try:
                 form = ProfileForm(request.post())
@@ -71,12 +152,20 @@ class ProfileController(Controller):
                 prof.contactIdent = form["contactIdent"]
                 prof.create()
                 careers = form["careers"]
-                for grade, career_ in sorted(careers.items(), key=lambda x:x[0]):
+                histories = form["histories"]
+                for career_ in careers.values():
                     career = Career()
-                    career.type = int(career_)
-                    career.grade = int(grade)
+                    career.type = int(career_["type"])
+                    career.grade = int(career_["grade"])
                     career.profile = prof
                     career.create()
+                for history_ in histories.values():
+                    history = TravelHistory()
+                    history.year = history_["year"]
+                    history.place = history_["place"]
+                    history.profile = prof
+                    history.description = history_["description"]
+                    history.create()
                 for colid, value in extra.items():
                     col = ExtraColumn.retrieve(colid)
                     val = ExtraColumnValue()

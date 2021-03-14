@@ -63,7 +63,7 @@ TEAM_MEMBER = 401
 EC = 500
 OTHER = 1000
 
-CARRER_TYPES = {
+CAREER_TYPES = {
     LCP: "LCP - 委員長",
     "OGX - 送り出し事業部": {
         OGXD: "OGX Director - 統括",
@@ -102,14 +102,14 @@ CARRER_TYPES = {
     OTHER: "その他",
 }
 
-CARRER_TYPES_FLAT = dict()
+CAREER_TYPES_FLAT = dict()
 
-for k, v in CARRER_TYPES.items():
+for k, v in CAREER_TYPES.items():
     if isinstance(v, dict):
         for k_, v_ in v.items():
-            CARRER_TYPES_FLAT[k_] = v_
+            CAREER_TYPES_FLAT[k_] = v_
     else:
-        CARRER_TYPES_FLAT[k] = v
+        CAREER_TYPES_FLAT[k] = v
 
 
 db = Database(prefix="alumni_index")
@@ -129,14 +129,13 @@ class Career(db.Model):
     profile = relationship(Profile, backref='careers')
     profile_id = Column(String(64), ForeignKey("alumni_index_profile._id"))
     grade = Column(Integer)
-    career = Column(Integer)
+    type = Column(Integer)
 
 
 class TravelHistory(db.Model):
     profile = relationship(Profile, backref='travel_histories')
     profile_id = Column(String(64), ForeignKey("alumni_index_profile._id"))
     year = Column(Integer)
-    span = Column(Integer)
     place = Column(String(64))
     description = Column(Text)
 

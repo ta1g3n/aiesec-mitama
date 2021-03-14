@@ -24,72 +24,79 @@
         <label class='form-label'>アイセックキャリア</label>
         <p>現役時代と名前が異なる場合は、日本語名と近いもの、もしくはその他にご記入ください</p>
         <div class='mt-2'>
-            <label class='form-label'>1回生</label>
-            <select name='career1' class='form-select'>
-                <option value="">未選択</option>
-                {% for key, obj in CARRER_TYPES.items() %}
-                {% if obj is mapping %}
-                <optgroup label='{{ key }}'>
-                {% for key_, label in obj.items() %}
-                <option value='{{ key_ }}' {% if post.career1 == key_ %}selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-                </optgroup>
-                {% else %}
-                <option value='{{ key }}' {% if post.career1 == key %}selected{% endif %}>{{ obj}}</option>
-                {% endif %}
-                {% endfor %}
-            </select>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>学年</th>
+                        <th>キャリア</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% %}
+                    <tr>
+                        <td>
+                            1回生
+                            <input class="form-control" name="careers.0.grade" type="hidden" />
+                        </td>
+                        <td>
+                            <select class='form-control' name='careers.0.type'>
+                                <option value="">未選択</option>
+                                {% for k_,obj in CAREER_TYPES.items() %}
+                                {% if obj is mapping %}
+                                <optgroup>
+                                    {% for k__,v in obj.items() %}
+                                    <option value="{{k__}}" {{ "selected" if post["career.0.type"]==k__ else "" }}>{{v}}</option>
+                                    {% endfor %}
+                                </optgroup>
+                                {% else %}
+                                <option value="{{k_}}" {{ "selected" if post["career.0.type"]==k_ else "" }}>{{obj}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td class='d-flex'><button class='btn btn-secondary ms-auto'>追加</button></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
+    </div>
+    <div class='mb-3'>
+        <label class='form-label'>渡航歴</label>
         <div class='mt-2'>
-            <label class='form-label'>2回生</label>
-            <select name='career2' class='form-select'>
-                <option value="">未選択</option>
-                {% for key, obj in CARRER_TYPES.items() %}
-                {% if obj is mapping %}
-                <optgroup label='{{ key }}'>
-                {% for key_, label in obj.items() %}
-                <option value='{{ key_ }}' {% if post.career2 == key_ %}selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-                </optgroup>
-                {% else %}
-                <option value='{{ key }}' {% if post.career2 == key %}selected{% endif %}>{{ obj}}</option>
-                {% endif %}
-                {% endfor %}
-            </select>
-        </div>
-        <div class='mt-2'>
-            <label class='form-label'>3回生</label>
-            <select name='career3' class='form-select'>
-                <option value="">未選択</option>
-                {% for key, obj in CARRER_TYPES.items() %}
-                {% if obj is mapping %}
-                <optgroup label='{{ key }}'>
-                {% for key_, label in obj.items() %}
-                <option value='{{ key_ }}' {% if post.career3 == key_ %}selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-                </optgroup>
-                {% else %}
-                <option value='{{ key }}' {% if post.career3 == key %}selected{% endif %}>{{ obj}}</option>
-                {% endif %}
-                {% endfor %}
-            </select>
-        </div>
-        <div class='mt-2'>
-            <label class='form-label'>4回生</label>
-            <select name='career4' class='form-select'>
-                <option value="">未選択</option>
-                {% for key, obj in CARRER_TYPES.items() %}
-                {% if obj is mapping %}
-                <optgroup label='{{ key }}'>
-                {% for key_, label in obj.items() %}
-                <option value='{{ key_ }}' {% if post.career4 == key_ %}selected{% endif %}>{{ label }}</option>
-                {% endfor %}
-                </optgroup>
-                {% else %}
-                <option value='{{ key }}' {% if post.career4 == key %}selected{% endif %}>{{ obj}}</option>
-                {% endif %}
-                {% endfor %}
-            </select>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th>渡航年度</th>
+                        <th>渡航先</th>
+                        <th>説明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <input class="form-control" name="history.0.year" type="number" min="1945" />
+                        </td>
+                        <td>
+                            <input class="form-control" name="history.0.place" />
+                        </td>
+                        <td>
+                            <textarea class="form-control" name="history.0.description"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td class='d-flex'><button class='btn btn-secondary ms-auto'>追加</button></td>
+                    </tr>
+                </tfoot>
+            </table>
         </div>
     </div>
     {% for col in extra_columns %}
