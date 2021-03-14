@@ -57,11 +57,15 @@ class ProfileController(Controller):
 
     def start_create(self, request):
         template = self.view.get_template("create/start.html")
-        return Response.render(template)
+        return Response.render(template, {
+            "title": "図鑑登録",
+        })
 
     def fin_create(self, request):
         template = self.view.get_template("create/fin.html")
-        return Response.render(template)
+        return Response.render(template, {
+            "title": "図鑑登録",
+        })
 
     def first_create(self, request):
         template = self.view.get_template("create/profile.html")
@@ -138,6 +142,7 @@ class ProfileController(Controller):
             except Exception as err:
                 error = str(err)
         return Response.render(template, {
+            "title": "図鑑登録",
             "error": error,
             "form": form
         })
