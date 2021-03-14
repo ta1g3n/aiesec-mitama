@@ -114,18 +114,24 @@ class ProfileController(Controller):
                 careers = form["careers"]
                 histories = form["histories"]
                 for career_ in careers.values():
-                    career = Career()
-                    career.type = int(career_["type"])
-                    career.grade = int(career_["grade"])
-                    career.profile = prof
-                    career.create()
+                    try:
+                        career = Career()
+                        career.type = int(career_["type"])
+                        career.grade = int(career_["grade"])
+                        career.profile = prof
+                        career.create()
+                    except Exception:
+                        pass
                 for history_ in histories.values():
-                    history = TravelHistory()
-                    history.year = history_["year"]
-                    history.place = history_["place"]
-                    history.profile = prof
-                    history.description = history_["description"]
-                    history.create()
+                    try:
+                        history = TravelHistory()
+                        history.year = history_["year"]
+                        history.place = history_["place"]
+                        history.profile = prof
+                        history.description = history_["description"]
+                        history.create()
+                    except Exception:
+                        pass
                 return Response.redirect(
                     self.app.convert_url("/create/fin")
                 )
