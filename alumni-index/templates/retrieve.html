@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class='container'>
-    <h1 class='mb-3'><ruby>{{prof.name}}<rt>{{prof.name}}</rt></ruby></h1>
+    <h1 class='mb-3'><ruby>{{prof.name}}<rt>{{prof.ruby}}</rt></ruby></h1>
     <img src="{{ dataurl(prof.image) }}" />
     <dl>
         <dt>入会年度</dt>
